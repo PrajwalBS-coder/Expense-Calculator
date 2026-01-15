@@ -31,9 +31,7 @@ class UserManager(BaseUserManager["User"]):
         user = self.create_user(
             email, password, is_staff=True, is_superuser=True, **extra_fields
         )
-        group, created = Group.objects.get_or_create(name="Full Access")
-        # if created:
-        #     group.permissions.add(*get_permissions())
+        group, _ = Group.objects.get_or_create(name="Full Access")
         group.user_set.add(user)
         return user
 
@@ -76,7 +74,6 @@ class User(
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self._effective_permissions = None
 
     def __str__(self):
         # Override the default __str__ of AbstractUser that returns username, which may
