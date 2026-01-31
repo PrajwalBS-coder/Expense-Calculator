@@ -1,16 +1,12 @@
-databases:
-  - name: E_Calculator
-    plan: free
-    databaseName: e_calculator
-    user: amin_2003
-
 services:
-  - type: web
+  - type: pgsql
+    name: e_calculator
+    databaseName: e_calculator  # Matches your DB
+    user: amin_2003
     plan: free
+
+  - type: web
     name: E_Calculator
-    runtime: python
-    buildCommand: './build.sh'
-    startCommand: 'python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -20,3 +16,7 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
+    plan: free
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
