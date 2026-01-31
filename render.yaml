@@ -1,8 +1,8 @@
 databases:
   - name: E_Calculator
     plan: free
-    databaseName: mysite
-    user: AMIN
+    databaseName: E_Calculator
+    user: amin_2003
 
 services:
   - type: web
