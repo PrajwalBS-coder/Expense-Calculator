@@ -6,13 +6,16 @@ databases:
 
 services:
   - type: web
-    name: e_calculator-web
+    name: e-calculator
     runtime: python
     plan: free
 
     rootDir: E_Calculator
 
-    buildCommand: ./build.sh
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
 
     startCommand: gunicorn E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
 
@@ -27,5 +30,3 @@ services:
         generateValue: true
       - key: PYTHONUNBUFFERED
         value: "1"
-      - key: WEB_CONCURRENCY
-        value: "4"
