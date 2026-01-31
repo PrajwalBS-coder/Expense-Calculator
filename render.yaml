@@ -1,31 +1,25 @@
-databases:
-  - name: e_calculator
-    databaseName: e_calculator
-    user: amin_2003
-    plan: free
-
 services:
   - type: web
     name: e-calculator
     runtime: python
     plan: free
 
+    branch: dev
     rootDir: E_Calculator
 
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py collectstatic --noinput
-      python manage.py migrate
+    pythonVersion: 3.11.9
+
+    buildCommand: ./build.sh
 
     startCommand: gunicorn E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
 
     envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: E_Calculator.settings
       - key: DATABASE_URL
         fromDatabase:
           name: e_calculator
           property: connectionString
-      - key: DJANGO_SETTINGS_MODULE
-        value: E_Calculator.settings
       - key: SECRET_KEY
         generateValue: true
       - key: PYTHONUNBUFFERED
