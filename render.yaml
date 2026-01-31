@@ -6,16 +6,26 @@ databases:
 
 services:
   - type: web
-    name: E_Calculator
+    name: e_calculator-web
+    runtime: python
+    plan: free
+
+    rootDir: E_Calculator
+
+    buildCommand: ./build.sh
+
+    startCommand: gunicorn E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
+
     envVars:
       - key: DATABASE_URL
         fromDatabase:
           name: e_calculator
           property: connectionString
+      - key: DJANGO_SETTINGS_MODULE
+        value: E_Calculator.settings
       - key: SECRET_KEY
         generateValue: true
+      - key: PYTHONUNBUFFERED
+        value: "1"
       - key: WEB_CONCURRENCY
-        value: 4
-    plan: free
-    runtime: python
-    startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
+        value: "4"
