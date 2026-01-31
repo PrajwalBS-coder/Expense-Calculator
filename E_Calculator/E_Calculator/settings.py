@@ -95,22 +95,7 @@ DATABASES = {
     )
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
-        'CONN_MAX_AGE': 3600,
-        # Note: psycopg2/psycopg[binary] does not accept MAX_CONNS or REUSE_CONNS
-        # as DSN/OPTIONS keys. These were causing "invalid dsn: invalid connection option"
-        # errors when building the connection string. Connection pooling should be
-        # managed externally (pgbouncer, pgsleep) or via a dedicated pooler library.
-        # Keep CONN_MAX_AGE for Django's persistent connections.
-    }
-}
+
 
 
 # Password validation
