@@ -6,21 +6,14 @@ services:
 
     branch: dev
     rootDir: E_Calculator
-
     pythonVersion: 3.11.9
 
     buildCommand: ./build.sh
 
-    startCommand: gunicorn E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
+    startCommand: gunicorn E_Calculator.E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
 
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: E_Calculator.settings
-      - key: DATABASE_URL
-        fromDatabase:
-          name: e_calculator
-          property: connectionString
-      - key: SECRET_KEY
-        generateValue: true
+        value: E_Calculator.E_Calculator.settings
       - key: PYTHONUNBUFFERED
         value: "1"
