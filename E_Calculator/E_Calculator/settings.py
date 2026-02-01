@@ -88,14 +88,25 @@ WSGI_APPLICATION = 'E_Calculator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgresql://postgres:postgres@localhost:5432/',
+#         conn_max_age=600
+#     )
+# }
+import dj_database_url
+from decouple import config
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600
+    "default": dj_database_url.config(
+        default=config(
+            "DATABASE_URL",
+            default="postgresql://localhost/postgres"
+        ),
+        conn_max_age=600,
+        ssl_require=not config("DEBUG", default=False, cast=bool),
     )
 }
-
-
 
 
 # Password validation
