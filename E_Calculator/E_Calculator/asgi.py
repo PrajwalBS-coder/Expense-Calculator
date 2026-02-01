@@ -11,6 +11,13 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'E_Calculator.settings')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'E_Calculator.settings')
+
+
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "E_Calculator.E_Calculator.settings"
+)
+
 
 application = get_asgi_application()
