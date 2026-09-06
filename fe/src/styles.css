@@ -1,0 +1,528 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  font-family: "Manrope", sans-serif;
+  color: #17221f;
+  background: #f4f1ea;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+.eyebrow,
+.label {
+  font:
+    500 0.68rem "DM Mono",
+    monospace;
+  letter-spacing: 0.08em;
+  color: #75807a;
+}
+.muted {
+  color: #75807a;
+}
+.brand-mark {
+  font:
+    800 2rem Manrope,
+    sans-serif;
+  letter-spacing: -0.12em;
+  color: #e7f0e8;
+}
+.brand-mark span {
+  color: #de765d;
+}
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: #1d302b;
+}
+.auth-copy {
+  padding: 11vw 8vw;
+  color: #f5f2eb;
+  background:
+    radial-gradient(circle at 70% 20%, #496b5b, transparent 34%), #1d302b;
+}
+.auth-copy .eyebrow {
+  color: #bdcbbd;
+}
+.auth-copy h1 {
+  max-width: 620px;
+  margin: 2rem 0 1.5rem;
+  font-size: clamp(3.4rem, 6vw, 6.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+}
+.auth-copy > p:last-child {
+  max-width: 380px;
+  line-height: 1.7;
+  color: #bdcbbd;
+}
+.auth-card {
+  align-self: center;
+  justify-self: center;
+  width: min(410px, 80%);
+  padding: 2.5rem;
+  background: #f8f6f0;
+  box-shadow: 18px 18px 0 #17221f;
+}
+.auth-card .brand-mark {
+  color: #1d302b;
+  margin-bottom: 3rem;
+}
+.auth-card h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.8rem;
+  letter-spacing: -0.05em;
+}
+.auth-card .muted {
+  margin: 0 0 1.7rem;
+  font-size: 0.88rem;
+}
+.auth-card input {
+  width: 100%;
+  border: 1px solid #d7d8cf;
+  background: transparent;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.75rem;
+  outline: none;
+}
+.auth-card input:focus {
+  border-color: #496b5b;
+}
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+.form-row input {
+  min-width: 0;
+}
+.primary-button {
+  border: 0;
+  background: #de765d;
+  color: #fff;
+  padding: 0.95rem 1.2rem;
+  font-weight: 700;
+  width: 100%;
+}
+.primary-button:disabled {
+  opacity: 0.6;
+}
+.text-button {
+  border: 0;
+  background: none;
+  color: #496b5b;
+  margin-top: 1.1rem;
+  width: 100%;
+  font-size: 0.8rem;
+}
+.error {
+  color: #b44d42;
+  font-size: 0.8rem;
+}
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+.app-shell aside {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  background: #1d302b;
+}
+.app-shell nav {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 5rem;
+}
+.app-shell nav a {
+  color: #8fa59a;
+  padding: 0.8rem 1rem;
+  font-size: 0.88rem;
+}
+.app-shell nav a.active {
+  color: #f5f2eb;
+  background: #496b5b;
+}
+.logout {
+  margin-top: auto;
+  background: none;
+  border: 1px solid #496b5b;
+  color: #bdcbbd;
+  padding: 0.7rem;
+  font-size: 0.78rem;
+}
+.dashboard {
+  max-width: 1320px;
+  width: 100%;
+  padding: 3.5rem 5vw;
+  margin: auto;
+}
+.dashboard header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.action-button,
+.close-button {
+  border: 0;
+  background: #de765d;
+  color: #fff;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.action-button.secondary,
+.close-button {
+  background: transparent;
+  color: #496b5b;
+  border: 1px solid #ccd2c8;
+}
+.report-button {
+  background: #1d302b;
+}
+.dashboard h1 {
+  margin: 0.6rem 0 2.5rem;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  letter-spacing: -0.08em;
+}
+.avatar {
+  border: 1px solid #ccd2c8;
+  background: transparent;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font:
+    500 0.65rem "DM Mono",
+    monospace;
+}
+.create-panel {
+  background: #faf9f4;
+  border: 1px solid #dedfd6;
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 1.2rem;
+}
+.entry-form {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr 0.9fr 1fr;
+  gap: 0.7rem;
+}
+.entry-form input,
+.entry-form select {
+  min-width: 0;
+  border: 1px solid #d7d8cf;
+  background: transparent;
+  padding: 0.75rem;
+}
+.entry-form input:last-of-type {
+  grid-column: span 2;
+}
+.entry-form .primary-button {
+  width: auto;
+}
+.report-form {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.report-form label {
+  font-size: 0.8rem;
+  color: #75807a;
+}
+.report-form input {
+  border: 1px solid #d7d8cf;
+  background: transparent;
+  padding: 0.75rem;
+}
+.report-form .primary-button {
+  width: auto;
+}
+.report-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+.report-results div {
+  background: #e8eee7;
+  padding: 1rem;
+}
+.report-results span,
+.report-results strong {
+  display: block;
+}
+.report-results span {
+  color: #75807a;
+  font-size: 0.7rem;
+}
+.report-results strong {
+  margin-top: 0.45rem;
+  font:
+    500 1.1rem "DM Mono",
+    monospace;
+}
+.report-panel h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.85rem;
+}
+.report-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-top: 1px solid #e5e5dc;
+  font-size: 0.8rem;
+}
+.report-line b {
+  font:
+    500 0.7rem "DM Mono",
+    monospace;
+}
+.hero-grid,
+.content-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 2fr 1fr;
+}
+.balance-panel,
+.stat-panel,
+.panel {
+  background: #faf9f4;
+  border: 1px solid #dedfd6;
+  padding: 1.8rem;
+}
+.balance-panel {
+  background: #496b5b;
+  color: #f5f2eb;
+}
+.balance-panel .label,
+.balance-panel .muted {
+  color: #cbd8cc;
+}
+.balance-panel strong {
+  display: block;
+  font-size: clamp(2.8rem, 6vw, 5.4rem);
+  letter-spacing: -0.09em;
+  margin: 1.7rem 0 2.2rem;
+}
+.balance-foot {
+  border-top: 1px solid #6d8975;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font:
+    0.68rem "DM Mono",
+    monospace;
+  color: #d8e1d8;
+}
+.stat-panel strong {
+  display: block;
+  font-size: 4rem;
+  letter-spacing: -0.1em;
+  margin: 1rem 0 0.2rem;
+}
+.content-grid {
+  margin-top: 1.2rem;
+  grid-template-columns: 1.2fr 0.8fr;
+}
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1.4rem;
+}
+.panel h2 {
+  margin: 0.45rem 0 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.05em;
+}
+.count {
+  color: #75807a;
+  font:
+    0.68rem "DM Mono",
+    monospace;
+}
+.expense-list {
+  display: grid;
+}
+.expense-row {
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid #e5e5dc;
+}
+.expense-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: #e8eee7;
+  color: #496b5b;
+  font-weight: 800;
+}
+.expense-row strong,
+.expense-row span {
+  display: block;
+}
+.expense-row span {
+  color: #75807a;
+  font-size: 0.7rem;
+  margin-top: 0.25rem;
+}
+.expense-row b {
+  font:
+    500 0.8rem "DM Mono",
+    monospace;
+}
+.bar-row {
+  margin: 1.4rem 0;
+}
+.bar-row > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+.bar-row b {
+  font:
+    0.68rem "DM Mono",
+    monospace;
+}
+.bar-track {
+  height: 5px;
+  background: #e5e5dc;
+  margin-top: 0.65rem;
+}
+.bar-track i {
+  display: block;
+  height: 100%;
+  background: #de765d;
+}
+.empty {
+  color: #75807a;
+  font-size: 0.85rem;
+  padding: 1.5rem 0;
+}
+.center-state {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  text-align: center;
+  color: #75807a;
+}
+.center-state .primary-button {
+  width: 180px;
+  margin: auto;
+}
+.loader {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #d7d8cf;
+  border-top-color: #496b5b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 760px) {
+  .auth-page {
+    display: block;
+  }
+  .auth-copy {
+    padding: 3rem 2rem 7rem;
+  }
+  .auth-copy h1 {
+    font-size: 3.6rem;
+  }
+  .auth-card {
+    margin: -4rem auto 2rem;
+    position: relative;
+    width: calc(100% - 2rem);
+  }
+  .app-shell {
+    display: block;
+  }
+  .app-shell aside {
+    min-height: auto;
+    padding: 1.2rem 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .app-shell nav {
+    display: flex;
+    margin: 0;
+    overflow: auto;
+  }
+  .app-shell nav a {
+    white-space: nowrap;
+    padding: 0.55rem 0.7rem;
+  }
+  .logout {
+    margin: 0 0 0 auto;
+    white-space: nowrap;
+  }
+  .dashboard {
+    padding: 2.2rem 1rem;
+  }
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: end;
+  }
+  .header-actions .avatar {
+    order: -1;
+  }
+  .entry-form {
+    grid-template-columns: 1fr;
+  }
+  .entry-form input:last-of-type {
+    grid-column: auto;
+  }
+  .entry-form .primary-button {
+    width: 100%;
+  }
+  .report-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .report-form .primary-button {
+    width: 100%;
+  }
+  .report-results {
+    grid-template-columns: 1fr;
+  }
+  .hero-grid,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard h1 {
+    margin-bottom: 1.7rem;
+  }
+  .balance-panel strong {
+    margin: 1.2rem 0 1.8rem;
+  }
+  .form-row {
+    display: block;
+  }
+}
