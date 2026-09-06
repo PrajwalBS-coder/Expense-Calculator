@@ -10,10 +10,10 @@ services:
 
     buildCommand: ./build.sh
 
-    startCommand: gunicorn E_Calculator.E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
+    startCommand: gunicorn E_Calculator.asgi:application -k uvicorn.workers.UvicornWorker
 
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: E_Calculator.E_Calculator.settings
+        value: E_Calculator.settings
       - key: PYTHONUNBUFFERED
         value: "1"

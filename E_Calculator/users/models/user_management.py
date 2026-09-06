@@ -78,4 +78,8 @@ class User(
     def __str__(self):
         # Override the default __str__ of AbstractUser that returns username, which may
         # lead to leaking sensitive data in logs.
-        return str(self.first_name)
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        if self.first_name:
+            return self.first_name
+        return str(self.email) if self.email else "User"

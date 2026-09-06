@@ -11,7 +11,7 @@ A web application to track and manage personal expenses efficiently.
 ## Technology Stack
 
 - **Backend**: Django (Python)
-- **Database**: SQLite (Default)
+- **Database**: PostgreSQL by default, with support for `DATABASE_URL` override
 
 ## Getting Started
 
@@ -19,8 +19,9 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Prerequisites
 
-- Python 3.8+ installed
+- Python 3.11+
 - pip (Python package installer)
+- PostgreSQL database (or a configured `DATABASE_URL`)
 
 ### Installation
 
@@ -33,27 +34,36 @@ Follow these instructions to get a copy of the project up and running on your lo
 2. **Create and activate a virtual environment** (recommended):
 
    ```bash
-   python -m venv venv
+   python -m venv expense_calculator
    # Windows
-   .\venv\Scripts\activate
+   .\expense_calculator\Scripts\activate
    # macOS/Linux
-   source venv/bin/activate
+   source expense_calculator/bin/activate
    ```
 
 3. **Install dependencies:**
 
    ```bash
-   pip install django
+   pip install -r requirements.txt
    ```
 
-4. **Run Migrations:**
+4. **Set environment variables** for Django and the database if needed:
+
+   ```bash
+   export SECRET_KEY="your-secret-key"
+   export DEBUG="True"
+   export ALLOWED_HOSTS="localhost,127.0.0.1"
+   export DATABASE_URL="postgres://user:password@localhost:5432/expense_calculator"
+   ```
+
+5. **Run Migrations:**
 
    ```bash
    cd E_Calculator
    python manage.py migrate
    ```
 
-5. **Start the Development Server:**
+6. **Start the Development Server:**
 
    ```bash
    python manage.py runserver
