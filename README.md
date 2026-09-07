@@ -98,6 +98,8 @@ To use another API URL, create `fe/.env`:
 VITE_API_URL=http://127.0.0.1:8000/api
 ```
 
+For deployment, set `VITE_API_URL` in the frontend host to the public Render API URL, for example `https://e-calculator.onrender.com/api`.
+
 ## Environment Variables
 
 The backend supports these settings through environment variables:
@@ -111,6 +113,43 @@ CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 
 For production, use a strong secret key, set `DEBUG=False`, configure the deployed frontend origin, and provide a production database URL.
+
+## Deployment
+
+### 1. Create the database
+
+Create a free PostgreSQL database with [Neon](https://neon.tech/) or [Supabase](https://supabase.com/), then copy its connection string. Do not commit this value to Git.
+
+### 2. Deploy the backend to Render
+
+In Render, choose **New > Blueprint** and select this repository. Render will read `render.yaml` and use the `E_Calculator` directory as the service root.
+
+Set these values when prompted:
+
+```env
+DATABASE_URL=your-postgresql-connection-string
+CORS_ALLOWED_ORIGINS=https://your-project.pages.dev
+```
+
+After deployment, verify the API documentation at `https://your-backend.onrender.com/swagger/`.
+
+### 3. Deploy the frontend to Cloudflare Pages
+
+Create a Pages project from the same repository with:
+
+```text
+Root directory: fe
+Build command: npm run build
+Output directory: dist
+```
+
+Add this environment variable:
+
+```env
+VITE_API_URL=https://your-backend.onrender.com/api
+```
+
+Copy the resulting Pages URL into Render's `CORS_ALLOWED_ORIGINS`, redeploy the backend, and then test registration, login, category creation, expense creation, and report generation.
 
 ## API Route Groups
 
