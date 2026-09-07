@@ -6,7 +6,6 @@ services:
 
     branch: dev
     rootDir: E_Calculator
-    pythonVersion: 3.11.9
 
     buildCommand: ./build.sh
 
