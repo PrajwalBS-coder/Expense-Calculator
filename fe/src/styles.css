@@ -414,6 +414,38 @@ button {
   height: 100%;
   background: #de765d;
 }
+.expense-chart {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 0.4rem;
+}
+.chart-row {
+  display: grid;
+  gap: 0.55rem;
+}
+.chart-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+}
+.chart-label b {
+  font:
+    500 0.68rem "DM Mono",
+    monospace;
+  white-space: nowrap;
+}
+.chart-track {
+  height: 0.6rem;
+  background: #e5e5dc;
+  overflow: hidden;
+}
+.chart-track i {
+  display: block;
+  height: 100%;
+  min-width: 0.35rem;
+  background: #de765d;
+}
 .empty {
   color: #75807a;
   font-size: 0.85rem;
