@@ -17,9 +17,27 @@
   let reportBusy = false;
 
   const money = (value) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(value || 0);
-  const chartWidth = (amount, breakdown) => {
-    const largest = Math.max(...breakdown.map((item) => Number(item.total) || 0), 0);
-    return largest ? Math.max(8, ((Number(amount) || 0) / largest) * 100) : 0;
+  const chartColors = ["#de765d", "#496b5b", "#d5aa47", "#7488a8", "#9b6a91", "#7a9b78"];
+  const chartEntries = (breakdown) => {
+    const entries = breakdown.filter((item) => Number(item.total) > 0);
+    const visibleEntries = entries.slice(0, 5);
+    const otherTotal = entries.slice(5).reduce((sum, item) => sum + Number(item.total), 0);
+    return otherTotal ? [...visibleEntries, { category: "Other", total: otherTotal }] : visibleEntries;
+  };
+  const pieSlices = (breakdown) => {
+    const entries = chartEntries(breakdown);
+    const total = entries.reduce((sum, item) => sum + Number(item.total), 0);
+    let start = 0;
+    return entries.map((item, index) => {
+      const end = start + (Number(item.total) / total) * 100;
+      const slice = { ...item, color: chartColors[index], percentage: (Number(item.total) / total) * 100, start, end };
+      start = end;
+      return slice;
+    });
+  };
+  const pieGradient = (breakdown) => {
+    const slices = pieSlices(breakdown);
+    return `conic-gradient(${slices.map((slice) => `${slice.color} ${slice.start}% ${slice.end}%`).join(", ")})`;
   };
 
   onMount(() => {
@@ -120,7 +138,7 @@
       {#if activeForm}<section class="create-panel"><div class="panel-heading"><div><p class="eyebrow">QUICK ENTRY</p><h2>{activeForm === "expense" ? "Add an expense" : "Add a category"}</h2></div><button class="close-button" on:click={() => (activeForm = "")}>Close</button></div>{#if activeForm === "expense"}<form class="entry-form" on:submit|preventDefault={submitExpense}><input placeholder="What did you spend on?" bind:value={expenseForm.title} required /><input type="number" step="0.01" min="0.01" placeholder="Amount" bind:value={expenseForm.amount} required /><input type="date" bind:value={expenseForm.expense_date} required /><select bind:value={expenseForm.category}><option value="">No category</option>{#each data.categories as category}<option value={category.id}>{category.name}</option>{/each}</select><input placeholder="Note (optional)" bind:value={expenseForm.description} /><button class="primary-button">Save expense</button></form>{:else}<form class="entry-form" on:submit|preventDefault={submitCategory}><input placeholder="Category name" bind:value={categoryForm.name} required /><input placeholder="Description (optional)" bind:value={categoryForm.description} /><button class="primary-button">Save category</button></form>{/if}{#if formError}<p class="error">{formError}</p>{/if}</section>{/if}
       <section class="hero-grid"><div class="balance-panel"><p class="label">TOTAL EXPENSES THIS MONTH</p><strong>{money(data.summary.total_expenses)}</strong><div class="balance-foot"><span>Tracked spending</span><span>{data.expenses.length} entries</span></div></div><div class="stat-panel"><p class="label">ACTIVE ROUTINES</p><strong>{data.recurring.filter((item) => item.is_active).length}</strong><p class="muted">recurring expenses</p></div></section>
       <section class="content-grid"><div class="panel"><div class="panel-heading"><div><p class="eyebrow">LATEST ACTIVITY</p><h2>Recent expenses</h2></div><span class="count">{data.expenses.length} total</span></div>{#if data.expenses.length}<div class="expense-list">{#each data.expenses.slice(0, 5) as expense}<div class="expense-row"><div class="expense-icon">{expense.title.slice(0, 1).toUpperCase()}</div><div><strong>{expense.title}</strong><span>{expense.category_name || "Uncategorized"} · {expense.expense_date}</span></div><b>{money(expense.amount)}</b></div>{/each}</div>{:else}<p class="empty">Your first expense will appear here.</p>{/if}</div>
-        <div class="panel breakdown"><div class="panel-heading"><div><p class="eyebrow">WHERE IT GOES</p><h2>Expense chart</h2></div></div>{#if data.breakdown.length}<div class="expense-chart" role="img" aria-label="Expenses by category">{#each data.breakdown.slice(0, 5) as item}<div class="chart-row"><div class="chart-label"><span>{item.category}</span><b>{money(item.total)}</b></div><div class="chart-track"><i style={`width: ${chartWidth(item.total, data.breakdown)}%`}></i></div></div>{/each}</div>{:else}<p class="empty">Add expenses to see patterns.</p>{/if}</div></section>
+        <div class="panel breakdown"><div class="panel-heading"><div><p class="eyebrow">WHERE IT GOES</p><h2>Expense chart</h2></div></div>{#if data.breakdown.length}<div class="expense-chart"><div class="donut-chart" style={`background: ${pieGradient(data.breakdown)}`} role="img" aria-label="Expenses by category"><div><strong>{money(data.summary.total_expenses)}</strong><span>This month</span></div></div><div class="chart-legend">{#each pieSlices(data.breakdown) as item}<div class="legend-row"><span class="legend-color" style={`background: ${item.color}`}></span><span>{item.category}</span><b>{item.percentage.toFixed(0)}% · {money(item.total)}</b></div>{/each}</div></div>{:else}<p class="empty">Add expenses to see patterns.</p>{/if}</div></section>
     </main>
   </div>
 {/if}

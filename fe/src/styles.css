@@ -416,35 +416,65 @@ button {
 }
 .expense-chart {
   display: grid;
-  gap: 1.2rem;
+  grid-template-columns: minmax(150px, 0.8fr) 1.2fr;
+  align-items: center;
+  gap: 1.5rem;
   margin-top: 0.4rem;
 }
-.chart-row {
+.donut-chart {
   display: grid;
-  gap: 0.55rem;
+  place-items: center;
+  width: min(100%, 190px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin: auto;
+  position: relative;
 }
-.chart-label {
+.donut-chart::before {
+  content: "";
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #faf9f4;
+}
+.donut-chart > div {
+  display: grid;
+  gap: 0.2rem;
+  position: relative;
+  text-align: center;
+}
+.donut-chart strong {
+  font:
+    500 0.9rem "DM Mono",
+    monospace;
+}
+.donut-chart span {
+  color: #75807a;
+  font-size: 0.65rem;
+}
+.chart-legend {
+  display: grid;
+  gap: 0.7rem;
+}
+.legend-row {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   font-size: 0.78rem;
 }
-.chart-label b {
+.legend-color {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+.legend-row b {
+  margin-left: auto;
   font:
     500 0.68rem "DM Mono",
     monospace;
   white-space: nowrap;
-}
-.chart-track {
-  height: 0.6rem;
-  background: #e5e5dc;
-  overflow: hidden;
-}
-.chart-track i {
-  display: block;
-  height: 100%;
-  min-width: 0.35rem;
-  background: #de765d;
 }
 .empty {
   color: #75807a;
@@ -546,6 +576,9 @@ button {
   }
   .hero-grid,
   .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .expense-chart {
     grid-template-columns: 1fr;
   }
   .dashboard h1 {

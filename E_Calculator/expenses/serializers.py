@@ -15,11 +15,29 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
-    category=serializers.ReadOnlyField(source='category.name')
+    # Keep the category UUID writable for create/update requests, while also
+    # exposing its human-readable name for the dashboard.
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.none(),
+        required=False,
+        allow_null=True,
+    )
+    category_name = serializers.ReadOnlyField(source="category.name")
+
     class Meta:
         model = Expense
-        fields = ["id", "user", "category", "title", "description", "amount", "expense_date"]
+        fields = ["id", "user", "category", "category_name", "title", "description", "amount", "expense_date"]
         read_only_fields = ["id", "user"]
+
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            fields["category"].queryset = Category.objects.filter(
+                user=request.user,
+                type="expense",
+            )
+        return fields
 
     def create(self, validated_data):
         validated_data["user"] = self.context["request"].user
