@@ -19,7 +19,11 @@ class CategoryListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Category.objects.filter(user=self.request.user)
+        queryset = Category.objects.filter(user=self.request.user)
+        category_type = self.request.query_params.get("type")
+        if category_type in dict(Category.CATEGORY_TYPE_CHOICES):
+            queryset = queryset.filter(type=category_type)
+        return queryset
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -36,7 +40,7 @@ class ExpenseListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Expense.objects.filter(user=self.request.user)
+        queryset = Expense.objects.filter(user=self.request.user).select_related("category")
 
         category_id = self.request.query_params.get("category")
         start_date = self.request.query_params.get("start_date")

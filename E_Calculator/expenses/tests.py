@@ -37,7 +37,46 @@ class ExpenseApiTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Expense.objects.count(), 1)
-        self.assertEqual(Expense.objects.get().title, "Lunch")
+        expense = Expense.objects.get()
+        self.assertEqual(expense.title, "Lunch")
+        self.assertEqual(expense.category, self.category)
+        self.assertEqual(response.data["category"], self.category.id)
+        self.assertEqual(response.data["category_name"], "Food")
+
+    def test_expense_cannot_use_another_users_category(self):
+        other_user = User.objects.create_user(
+            email="other@example.com",
+            password="securepass123",
+            first_name="Other",
+            last_name="User",
+        )
+        other_category = Category.objects.create(
+            user=other_user,
+            name="Travel",
+            type="expense",
+        )
+
+        response = self.client.post(
+            reverse("expense-list-create"),
+            {
+                "category": str(other_category.id),
+                "title": "Flight",
+                "amount": "300.00",
+                "expense_date": "2026-09-02",
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(Expense.objects.count(), 0)
+
+    def test_categories_can_be_filtered_by_type(self):
+        Category.objects.create(user=self.user, name="Salary", type="income")
+
+        response = self.client.get(reverse("category-list-create"), {"type": "expense"})
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual([category["name"] for category in response.data], ["Food"])
 
     def test_list_expenses_for_authenticated_user(self):
         Expense.objects.create(
